@@ -12,50 +12,6 @@ conda activate spatialmeta
 cd /data/user/hesy/projects/SpatialMETA/SpaDTA_718
 ```
 
-## Main training entry points
-
-### Spatial metabolomics (SM)
-
-```bash
-python tutorial/run_single_sample_sm.py --sample-name X49_T
-```
-
-`run_single_sample_sm.py` calls
-`SpaDTA_718.model.train_eval_workflow.run_train_eval_cli` with the SM
-configuration. It supports the ccRCC and FMP samples listed in
-`target_clusters_by_sample` and uses:
-
-- model-ready input under
-  `/bigdat2/user/hesy/spatialmeta/SpatialMETA/SpaDTA_718_model_input/SM`;
-- 300 training epochs and batch size 512;
-- training seed 42 and clustering seed 0;
-- 20-component PCA for evaluation;
-- epoch-300 evaluation and saved embeddings at epochs 120, 180, 240, and 300;
-- output under `runs/sm_final/<sample_name>`.
-
-The default sample is `248_T` and the default device is `cuda:7`. The command
-line `--sample-name` changes the sample without changing the source script.
-
-### ATAC
-
-```bash
-python tutorial/run_single_sample_atac.py --sample-name Mouse_Brain_E18_S1
-```
-
-`run_single_sample_atac.py` uses the same shared training workflow with the
-ATAC-specific configuration. Its defaults are:
-
-- model-ready input under
-  `/bigdat2/user/hesy/spatialmeta/SpatialMETA/SpaDTA_718_model_input/ATAC`;
-- 300 training epochs and batch size 256;
-- training seed 42 and clustering seed 2020;
-- 20-component PCA for evaluation;
-- epoch-300 evaluation and saved embeddings at epochs 100, 200, and 300;
-- output under `runs/atac_final/<sample_name>`.
-
-The default sample is `Mouse_Brain_E18_S1` and the default device is `cuda:4`.
-Four mouse-brain samples are supported by the script.
-
 ## Preprocessing
 
 Preprocessing must be completed before training. The scripts write model-ready
@@ -85,6 +41,39 @@ The ATAC preprocessor matches RNA and ATAC spots by `obs_names`, verifies their
 spatial coordinates, selects RNA HVGs, applies SMART-style TF-IDF and PCA to
 ATAC, and writes a joint model input. ATAC preprocessing PCA uses random seed
 42; this preprocessing seed is independent of the training seed.
+
+## Main training entry points
+
+### Spatial metabolomics (SM)
+
+```bash
+python tutorial/run_single_sample_sm.py --sample-name X49_T
+```
+
+`run_single_sample_sm.py` calls
+`SpaDTA_718.model.train_eval_workflow.run_train_eval_cli` with the SM
+configuration. It supports the ccRCC and FMP samples listed in
+`target_clusters_by_sample` and uses model-ready input under
+`/bigdat2/user/hesy/spatialmeta/SpatialMETA/SpaDTA_718_model_input/SM`, 300
+training epochs, batch size 512, training seed 42, clustering seed 0, and
+20-component PCA for evaluation. Outputs are written to
+`runs/sm_final/<sample_name>`.
+
+The default sample is `248_T` and the default device is `cuda:7`.
+
+### ATAC
+
+```bash
+python tutorial/run_single_sample_atac.py --sample-name Mouse_Brain_E18_S1
+```
+
+`run_single_sample_atac.py` uses the shared training workflow with the
+ATAC-specific configuration. It uses model-ready input under
+`/bigdat2/user/hesy/spatialmeta/SpatialMETA/SpaDTA_718_model_input/ATAC`, 300
+training epochs, batch size 256, training seed 42, clustering seed 2020, and
+20-component PCA. Outputs are written to `runs/atac_final/<sample_name>`.
+
+The default sample is `Mouse_Brain_E18_S1` and the default device is `cuda:4`.
 
 ## Evaluation of saved embeddings
 
@@ -117,7 +106,3 @@ run directory for reproducibility.
 
 - Paths in the scripts target the shared `/bigdat2` data installation; adjust
   only the dataset roots when running on another machine.
-- The preprocessing representation and seed are kept fixed when comparing
-  training seeds.
-- Existing main results are not overwritten by the multi-seed wrappers, which
-  use separate output roots.
