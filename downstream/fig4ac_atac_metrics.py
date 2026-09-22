@@ -41,7 +41,7 @@ METHODS = [
     "scMM",
     "MISO",
 ]
-METRICS = ["ARI", "NMI", "AMI", "Homo", "V-Measure", "FMI", "MI"]
+METRICS = ["ARI", "NMI", "AMI", "Homo", "FMI", "MI"]
 METHOD_COLORS = {
     "SpaDTA": "#4F5D95",
     "PRESENT": "#16A9CA",

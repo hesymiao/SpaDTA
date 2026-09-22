@@ -48,7 +48,6 @@ def main() -> None:
         if float(entry["target_mz"]) in {227.10823423028484, 758.5685152097649}
     ]
     plotter.plot_single_metabolite = lambda **kwargs: {}
-    plotter.plot_selected_metabolite_summary = lambda **kwargs: {}
     original_autoscaled_plot = plotter.plot_single_metabolite_autoscaled_pair
 
     def plot_autoscaled_png_svg_only(**kwargs):
@@ -86,38 +85,38 @@ def main() -> None:
         "精确质量不能排除同分异构体，PA 脂质的脂肪酸链位置尤其不能仅凭 MS1 确定；正文必须使用 putative/tentative，不能写成 MS/MS 已确认。"
     )
     plotter.analysis_overall_note = (
-        "DMGV 和 PA(40:3) candidate 的恢复最强；19,20-DiHDPA 与 14,15-DHET candidate 的总体相关中等，"
-        "但在 Imm_1 富集并保留了可辨认的空间 hotspot。四个峰真实非零 spot 比例均超过 50%，不属于几乎无表达的低信号 marker。"
+        "两个候选特征均保留了可辨认的空间结构，其中磷脂酰胆碱候选的 PCC 较高。"
+        "这些结果用于描述候选分子的空间模式，而不是作为已确认的代谢物鉴定结果。"
     )
     plotter.analysis_reference_note = (
-        "Biological support: DMGV/AGXT2 kidney metabolism (PMID: 31818439); "
-        "19,20-DiHDPA pro-resolutive oxylipin biology (PMID: 38054009); "
-        "14,15-DHET oxylipin biology (PMID: 35083437); exact chemical identities require MS/MS confirmation."
+        "Biological support: N-lactoyl amino acids and lactate-associated amino-acid metabolism; "
+        "phosphatidylcholine-related membrane organization and signalling. "
+        "Exact chemical identities and lipid structures require MS/MS confirmation."
     )
     plotter.MARKER_METABOLITES = [
         {
             "target_mz": 227.10823423028484,
-            "assigned_name": "Putative dimethylguanidino valeric acid ([M+Na]+)",
-            "display_name": "DMGV",
+            "assigned_name": "Putative N-lactoylleucine ([M+Na]+)",
+            "display_name": "N-lactoylleucine candidate",
             "ion_form": "putative [M+Na]+",
-            "metabolite_class": "methylated arginine catabolite",
-            "accession": "HMDB0240212",
-            "ppm_error": 0.0014,
-            "story_tag": "dmgv_kidney_metabolism",
-            "story_label": "AGXT2-linked renal arginine metabolism",
-            "annotation_evidence": "HMDB0240212 [M+Na]+ exact-mass match (0.001 ppm); AGXT2 is strongly expressed in kidney and metabolizes dimethylarginines (PMID: 31818439)",
+            "metabolite_class": "N-lactoyl amino acid",
+            "accession": "HMDB0062176",
+            "ppm_error": 0.25,
+            "story_tag": "nlactoylleucine_lactate_amino_acid_metabolism",
+            "story_label": "lactate-associated amino-acid metabolism",
+            "annotation_evidence": "HMDB0062176 [M+Na]+ mass match (approximately 0.25 ppm); exact identity requires MS/MS",
         },
         {
             "target_mz": 758.5685152097649,
-            "assigned_name": "Putative PA(40:3) species ([M+H]+)",
-            "display_name": "PA(40:3) candidate",
-            "ion_form": "putative [M+H]+",
-            "metabolite_class": "phosphatidic acid",
-            "accession": "HMDB0114914",
-            "ppm_error": 0.0013,
-            "story_tag": "phosphatidic_acid_membrane_remodeling",
-            "story_label": "phosphatidic acid / membrane remodeling",
-            "annotation_evidence": "HMDB0114914 [M+H]+ exact-mass match (0.001 ppm); sum composition is plausible, but acyl-chain positions require MS/MS",
+            "assigned_name": "Putative phosphatidylcholine species, consistent with PC(14:0/20:2)",
+            "display_name": "PC(14:0/20:2) candidate",
+            "ion_form": "ion form unresolved",
+            "metabolite_class": "phosphatidylcholine",
+            "accession": "HMDB0007880",
+            "ppm_error": 3.94,
+            "story_tag": "phosphatidylcholine_membrane_organization",
+            "story_label": "phosphatidylcholine-associated membrane organization and signalling",
+            "annotation_evidence": "HMDB0007880 neutral-mass match (approximately 3.9 ppm); ion form and acyl-chain assignment require MS/MS",
         },
         {
             "target_mz": 389.24709140897994,

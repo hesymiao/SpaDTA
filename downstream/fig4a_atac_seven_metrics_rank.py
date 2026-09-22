@@ -23,7 +23,7 @@ OUTPUT_STEM = (
     / "SpaDTA_718/runs/atac_downstream/fig4a/fig4a_atac_seven_metrics_rank"
 )
 
-METRICS = ["ARI", "NMI", "AMI", "Homo", "V-Measure", "FMI", "MI"]
+METRICS = ["ARI", "NMI", "AMI", "Homo", "FMI", "MI"]
 PALETTE = ["#49006A", "#AE007E", "#F768A1", "#FCC5C0", "#FFE9DE"]
 METHOD_COLORS = {
     "SpaDTA": "#4F5D95",
